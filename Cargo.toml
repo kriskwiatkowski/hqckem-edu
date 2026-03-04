@@ -1,0 +1,30 @@
+[package]
+name = "hqc"
+version = "0.1.0"
+edition = "2021"
+authors = ["HQC Team"]
+description = "Hamming Quasi-Cyclic (HQC) - Post-Quantum Key Encapsulation Mechanism"
+license = "MIT OR Apache-2.0"
+repository = "https://pqc-hqc.org"
+keywords = ["cryptography", "post-quantum", "kem", "code-based"]
+categories = ["cryptography", "no-std"]
+
+[dependencies]
+sha3 = "0.10"
+rand_core = { version = "0.6", default-features = false }
+rand = { version = "0.8", optional = true }
+zeroize = { version = "1.7", features = ["derive"] }
+
+[dev-dependencies]
+rand = "0.8"
+hex = "0.4"
+aes = "0.8"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[features]
+default = ["std"]
+std = ["rand"]
+
+[[bench]]
+name = "bench"
+harness = false
