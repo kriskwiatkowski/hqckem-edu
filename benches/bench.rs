@@ -5,7 +5,7 @@ use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Through
 use criterion::measurement::Measurement;
 use criterion_cycles_per_byte::CyclesPerByte;
 
-use hqc::{HqcParams, generate_key, encaps, decaps};
+use hqc::{HqcParams, keygen, encaps, decaps};
 
 const PARAMETER_SETS: [&str; 3] = ["HQC-128", "HQC-192", "HQC-256"];
 
@@ -26,7 +26,7 @@ fn benchmark_keygen<M: Measurement>(c: &mut Criterion<M>) {
                 let mut pk = vec![0u8; 7237];
                 let mut sk = vec![0u8; 7333];
                 b.iter(|| {
-                    generate_key(param, &seed, &mut pk, &mut sk)
+                    keygen(param, &seed, &mut pk, &mut sk)
                 });
             },
         );
@@ -47,7 +47,7 @@ fn benchmark_encaps<M: Measurement>(c: &mut Criterion<M>) {
         let p = HqcParams::new(param_name).unwrap();
         let mut pk = vec![0u8; 7237];
         let mut sk = vec![0u8; 7333];
-        generate_key(&p, &seed_keygen, &mut pk, &mut sk);
+        keygen(&p, &seed_keygen, &mut pk, &mut sk);
 
         group.bench_with_input(
             BenchmarkId::from_parameter(param_name),
@@ -80,7 +80,7 @@ fn benchmark_decaps<M: Measurement>(c: &mut Criterion<M>) {
         let mut ct = vec![0u8; 14_421];
         let mut ss1: Vec<u8> = vec![0u8; 32];
         let seed_encaps = vec![0u8; 48];
-        generate_key(&p, &seed_keygen, &mut pk, &mut sk);
+        keygen(&p, &seed_keygen, &mut pk, &mut sk);
         encaps(&p, &seed_encaps, &pk, &mut ss1, &mut ct);
 
         group.bench_with_input(

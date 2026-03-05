@@ -11,9 +11,9 @@ categories = ["cryptography", "no-std"]
 
 [dependencies]
 sha3 = { version = "0.10", default-features = false }
-rand_core = { version = "0.6", default-features = false }
 
 [dev-dependencies]
+rand_core = { version = "0.6", default-features = false }
 rand = "0.8"
 hex = "0.4"
 aes = "0.8"
@@ -21,7 +21,8 @@ criterion = "=0.8.2"
 criterion-cycles-per-byte = "0.8.0"
 
 [features]
-default = []
+default = ["std"]
+std = []
 
 [[bench]]
 name = "bench"
