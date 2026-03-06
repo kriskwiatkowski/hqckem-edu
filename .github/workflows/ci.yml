@@ -44,9 +44,8 @@ jobs:
       - name: Run tests
         run: cargo test --verbose
 
-      - name: Run KAT
-        run: |
-          cargo run --example kat_tests
+      - name: Run KAT tests
+        run: cargo test kat_vectors -- --nocapture
 
   #      - name: Check formatting
   #        run: cargo fmt -- --check
